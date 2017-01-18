@@ -37,7 +37,9 @@ import android.net.Uri;
 import android.os.Process;
 import android.preference.PreferenceManager;
 import android.provider.Browser;
-import android.provider.Browser.BookmarkColumns;
+
+import com.android.browser.os.BrowserConstants;
+import com.android.browser.os.BrowserConstants.BookmarkColumns;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -826,7 +828,7 @@ public class BrowserProvider extends ContentProvider {
                 long rowID = db.insert(TABLE_NAMES[URI_MATCH_BOOKMARKS], "url",
                         initialValues);
                 if (rowID > 0) {
-                    uri = ContentUris.withAppendedId(Browser.BOOKMARKS_URI,
+                    uri = ContentUris.withAppendedId(BrowserConstants.BOOKMARKS_URI,
                             rowID);
                 }
                 isBookmarkTable = true;
@@ -838,7 +840,7 @@ public class BrowserProvider extends ContentProvider {
                 long rowID = db.insert(TABLE_NAMES[URI_MATCH_SEARCHES], "url",
                         initialValues);
                 if (rowID > 0) {
-                    uri = ContentUris.withAppendedId(Browser.SEARCHES_URI,
+                    uri = ContentUris.withAppendedId(BrowserConstants.SEARCHES_URI,
                             rowID);
                 }
                 break;
@@ -894,7 +896,7 @@ public class BrowserProvider extends ContentProvider {
 
         // we'lll need to back up the bookmark set if we are about to delete one
         if (isBookmarkTable) {
-            Cursor cursor = cr.query(Browser.BOOKMARKS_URI,
+            Cursor cursor = cr.query(BrowserConstants.BOOKMARKS_URI,
                     new String[] { BookmarkColumns.BOOKMARK },
                     "_id = " + id, null, null);
             if (cursor.moveToNext()) {
@@ -952,7 +954,7 @@ public class BrowserProvider extends ContentProvider {
                 // If a title or URL has been changed, check to see if it is to
                 // a bookmark.  The ID should have been included in the update,
                 // so use it.
-                Cursor cursor = cr.query(Browser.BOOKMARKS_URI,
+                Cursor cursor = cr.query(BrowserConstants.BOOKMARKS_URI,
                         new String[] { BookmarkColumns.BOOKMARK },
                         BookmarkColumns._ID + " = "
                         + values.getAsString(BookmarkColumns._ID), null, null);

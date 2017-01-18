@@ -33,8 +33,9 @@ import android.util.Log;
 import android.util.Patterns;
 
 import com.android.browser.UI.ComboViews;
+import com.android.browser.os.BrowserConstants;
+import com.android.browser.os.Search;
 import com.android.browser.search.SearchEngine;
-import com.android.common.Search;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -302,7 +303,7 @@ public class IntentHandler {
             new AsyncTask<Void, Void, Void>() {
                 @Override
                 protected Void doInBackground(Void... unused) {
-                        Browser.addSearchUrl(cr, newUrl);
+                        BrowserConstants.addSearchUrl(cr, newUrl);
                     return null;
                 }
             }.execute();

@@ -26,8 +26,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.os.FileUtils;
-import android.provider.BrowserContract;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.FileUtils;
+
 import android.text.TextUtils;
 
 import java.io.File;

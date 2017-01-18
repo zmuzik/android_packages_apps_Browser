@@ -22,15 +22,14 @@ import java.net.URL;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Images;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.BrowserContract.Images;
 import android.webkit.WebView;
 
 import java.io.ByteArrayOutputStream;

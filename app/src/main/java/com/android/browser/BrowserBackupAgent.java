@@ -22,8 +22,8 @@ import android.app.backup.BackupDataOutput;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.ParcelFileDescriptor;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Bookmarks;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.BrowserContract.Bookmarks;
 import android.util.Log;
 
 import java.io.DataInputStream;
