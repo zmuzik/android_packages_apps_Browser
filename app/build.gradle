@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.android.browser"
-        minSdkVersion 21
-        targetSdkVersion 23
+        minSdkVersion 19
+        targetSdkVersion 24
 
         testApplicationId "com.android.browser.tests"
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
