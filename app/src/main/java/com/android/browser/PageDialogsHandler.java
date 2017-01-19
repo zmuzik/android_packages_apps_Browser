@@ -341,53 +341,55 @@ public class PageDialogsHandler {
      */
     private AlertDialog.Builder createSslCertificateDialog(SslCertificate certificate,
             SslError error) {
-        //XXX inflate properly
         //View certificateView = certificate.inflateCertificateView(mContext);
-        View certificateView = LayoutInflater.from(mContext).inflate(
-                com.android.internal.R.layout.ssl_certificate, null);
-        final LinearLayout placeholder =
-                (LinearLayout)certificateView.findViewById(com.android.internal.R.id.placeholder);
+        View certificateView = new View(mContext);
+        //XXX TODO import texts and layouts and implement
 
-        LayoutInflater factory = LayoutInflater.from(mContext);
-        int iconId;
-
-        if (error == null) {
-            iconId = R.drawable.ic_dialog_browser_certificate_secure;
-            LinearLayout table = (LinearLayout)factory.inflate(R.layout.ssl_success, placeholder);
-            TextView successString = (TextView)table.findViewById(R.id.success);
-            successString.setText(com.android.internal.R.string.ssl_certificate_is_valid);
-        } else {
-            iconId = R.drawable.ic_dialog_browser_certificate_partially_secure;
-            if (error.hasError(SslError.SSL_UNTRUSTED)) {
-                addError(factory, placeholder, R.string.ssl_untrusted);
-            }
-            if (error.hasError(SslError.SSL_IDMISMATCH)) {
-                addError(factory, placeholder, R.string.ssl_mismatch);
-            }
-            if (error.hasError(SslError.SSL_EXPIRED)) {
-                addError(factory, placeholder, R.string.ssl_expired);
-            }
-            if (error.hasError(SslError.SSL_NOTYETVALID)) {
-                addError(factory, placeholder, R.string.ssl_not_yet_valid);
-            }
-            if (error.hasError(SslError.SSL_DATE_INVALID)) {
-                addError(factory, placeholder, R.string.ssl_date_invalid);
-            }
-            if (error.hasError(SslError.SSL_INVALID)) {
-                addError(factory, placeholder, R.string.ssl_invalid);
-            }
-            // The SslError should always have at least one type of error and we
-            // should explicitly handle every type of error it supports. We
-            // therefore expect the condition below to never be hit. We use it
-            // as as safety net in case a new error type is added to SslError
-            // without the logic above being updated accordingly.
-            if (placeholder.getChildCount() == 0) {
-                addError(factory, placeholder, R.string.ssl_unknown);
-            }
-        }
+//        View certificateView = LayoutInflater.from(mContext).inflate(
+//                com.android.internal.R.layout.ssl_certificate, null);
+//        final LinearLayout placeholder =
+//                (LinearLayout)certificateView.findViewById(com.android.internal.R.id.placeholder);
+//
+//        LayoutInflater factory = LayoutInflater.from(mContext);
+        int iconId = R.drawable.ic_dialog_browser_certificate_secure;
+//
+//        if (error == null) {
+//            iconId = R.drawable.ic_dialog_browser_certificate_secure;
+//            LinearLayout table = (LinearLayout)factory.inflate(R.layout.ssl_success, placeholder);
+//            TextView successString = (TextView)table.findViewById(R.id.success);
+//            successString.setText(com.android.internal.R.string.ssl_certificate_is_valid);
+//        } else {
+//            iconId = R.drawable.ic_dialog_browser_certificate_partially_secure;
+//            if (error.hasError(SslError.SSL_UNTRUSTED)) {
+//                addError(factory, placeholder, R.string.ssl_untrusted);
+//            }
+//            if (error.hasError(SslError.SSL_IDMISMATCH)) {
+//                addError(factory, placeholder, R.string.ssl_mismatch);
+//            }
+//            if (error.hasError(SslError.SSL_EXPIRED)) {
+//                addError(factory, placeholder, R.string.ssl_expired);
+//            }
+//            if (error.hasError(SslError.SSL_NOTYETVALID)) {
+//                addError(factory, placeholder, R.string.ssl_not_yet_valid);
+//            }
+//            if (error.hasError(SslError.SSL_DATE_INVALID)) {
+//                addError(factory, placeholder, R.string.ssl_date_invalid);
+//            }
+//            if (error.hasError(SslError.SSL_INVALID)) {
+//                addError(factory, placeholder, R.string.ssl_invalid);
+//            }
+//            // The SslError should always have at least one type of error and we
+//            // should explicitly handle every type of error it supports. We
+//            // therefore expect the condition below to never be hit. We use it
+//            // as as safety net in case a new error type is added to SslError
+//            // without the logic above being updated accordingly.
+//            if (placeholder.getChildCount() == 0) {
+//                addError(factory, placeholder, R.string.ssl_unknown);
+//            }
+//        }
 
         return new AlertDialog.Builder(mContext)
-                .setTitle(com.android.internal.R.string.ssl_certificate)
+                //.setTitle(com.android.internal.R.string.ssl_certificate)
                 .setIcon(iconId)
                 .setView(certificateView);
     }
