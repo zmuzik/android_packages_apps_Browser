@@ -89,13 +89,14 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
     }
 
     static void deleteWidgetState(Context context, int widgetId) {
-        File file = context.getSharedPrefsFile(
-                String.format("widgetState-%d", widgetId));
-        if (file.exists()) {
-            if (!file.delete()) {
-                file.deleteOnExit();
-            }
-        }
+        //FIXME do something with this rubbish
+//        File file = context.getSharedPrefsFile(
+//                String.format("widgetState-%d", widgetId));
+//        if (file.exists()) {
+//            if (!file.delete()) {
+//                file.deleteOnExit();
+//            }
+//        }
     }
 
     static void changeFolder(Context context, Intent intent) {
@@ -121,16 +122,17 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
      *  Checks for any state files that may have not received onDeleted
      */
     static void removeOrphanedStates(Context context, int[] widgetIds) {
-        File prefsDirectory = context.getSharedPrefsFile("null").getParentFile();
-        File[] widgetStates = prefsDirectory.listFiles(new StateFilter(widgetIds));
-        if (widgetStates != null) {
-            for (File f : widgetStates) {
-                Log.w(TAG, "Found orphaned state: " + f.getName());
-                if (!f.delete()) {
-                    f.deleteOnExit();
-                }
-            }
-        }
+        //FIXME do something with this rubbish
+//        File prefsDirectory = context.getSharedPrefsFile("null").getParentFile();
+//        File[] widgetStates = prefsDirectory.listFiles(new StateFilter(widgetIds));
+//        if (widgetStates != null) {
+//            for (File f : widgetStates) {
+//                Log.w(TAG, "Found orphaned state: " + f.getName());
+//                if (!f.delete()) {
+//                    f.deleteOnExit();
+//                }
+//            }
+//        }
     }
 
     static class StateFilter implements FilenameFilter {
@@ -252,7 +254,8 @@ public class BookmarkThumbnailWidgetService extends RemoteViewsService {
                 options.inPreferredConfig = Config.ARGB_8888;
                 Bitmap thumbnail = null, favicon = null;
                 byte[] blob = mBookmarks.getBlob(BOOKMARK_INDEX_THUMBNAIL);
-                views.setDrawableParameters(R.id.thumb, true, 255, -1, null, -1);
+                //XXX
+                //views.setDrawableParameters(R.id.thumb, true, 255, -1, null, -1);
                 if (blob != null && blob.length > 0) {
                     thumbnail = BitmapFactory.decodeByteArray(
                             blob, 0, blob.length, options);

@@ -108,9 +108,11 @@ public class DefaultSearchEngine implements SearchEngine {
     }
 
     public Cursor getSuggestions(Context context, String query) {
-        SearchManager searchManager =
-                (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
-        return searchManager.getSuggestions(mSearchable, query);
+//FIXME
+//        SearchManager searchManager =
+//                (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
+//        return searchManager.getSuggestions(mSearchable, query);
+        return null;
     }
 
     public boolean supportsSuggestions() {
