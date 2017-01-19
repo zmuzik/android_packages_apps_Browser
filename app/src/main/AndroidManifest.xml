@@ -73,7 +73,7 @@
                    android:supportsRtl="true" >
 
         <provider android:name=".provider.BrowserProvider2"
-                  android:authorities="com.android.browser;browser"
+                  android:authorities="com.android.browser.bh"
                   android:multiprocess="false"
                   android:exported="true"
                   android:theme="@style/PreferencesTheme"
