@@ -35,13 +35,14 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.ParseException;
 import android.net.Uri;
-import android.net.WebAddress;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import com.android.browser.os.BrowserContract;
 import com.android.browser.os.BrowserContract.Accounts;
+import com.android.browser.os.WebAddress;
+
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
