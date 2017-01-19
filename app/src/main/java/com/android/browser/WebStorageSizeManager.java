@@ -25,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.StatFs;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.webkit.WebStorage;
 
@@ -406,9 +407,13 @@ public class WebStorageSizeManager {
                     WebsiteSettingsFragment.class.getName());
             PendingIntent contentIntent =
                 PendingIntent.getActivity(mContext, 0, intent, 0);
-            Notification notification = new Notification(icon, title, when);
-            notification.setLatestEventInfo(mContext, title, text, contentIntent);
-            notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext);
+            Notification notification = builder.setContentIntent(contentIntent)
+                    .setSmallIcon(icon).setTicker(text).setWhen(when)
+                    .setAutoCancel(true).setContentTitle(title)
+                    .setContentText(text).build();
+
             // Fire away.
             String ns = Context.NOTIFICATION_SERVICE;
             NotificationManager mgr =

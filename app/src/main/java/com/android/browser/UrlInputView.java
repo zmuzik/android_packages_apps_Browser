@@ -41,9 +41,8 @@ import com.android.browser.SuggestionsAdapter.SuggestItem;
 import com.android.browser.search.SearchEngine;
 import com.android.browser.search.SearchEngineInfo;
 import com.android.browser.search.SearchEngines;
-import com.android.internal.R;
 
-import java.util.List;
+import java.lang.reflect.Method;
 
 /**
  * url/search input view
@@ -83,7 +82,7 @@ public class UrlInputView extends AutoCompleteTextView
     }
 
     public UrlInputView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.attr.autoCompleteTextViewStyle);
+        this(context, attrs, android.R.attr.autoCompleteTextViewStyle);
     }
 
     public UrlInputView(Context context) {
@@ -219,7 +218,14 @@ public class UrlInputView extends AutoCompleteTextView
     }
 
     void showIME() {
-        mInputManager.focusIn(this);
+        try {
+            Method m = mInputManager.getClass().getMethod("focusIn");
+            if (m != null) {
+                m.invoke(mInputManager, this);
+            }
+        } catch (Throwable t) {
+            // intentionally left blank
+        }
         mInputManager.showSoftInput(this, 0);
     }
 

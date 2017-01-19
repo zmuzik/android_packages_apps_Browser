@@ -341,7 +341,10 @@ public class PageDialogsHandler {
      */
     private AlertDialog.Builder createSslCertificateDialog(SslCertificate certificate,
             SslError error) {
-        View certificateView = certificate.inflateCertificateView(mContext);
+        //XXX inflate properly
+        //View certificateView = certificate.inflateCertificateView(mContext);
+        View certificateView = LayoutInflater.from(mContext).inflate(
+                com.android.internal.R.layout.ssl_certificate, null);
         final LinearLayout placeholder =
                 (LinearLayout)certificateView.findViewById(com.android.internal.R.id.placeholder);
 

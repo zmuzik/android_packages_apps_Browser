@@ -63,6 +63,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -279,7 +280,17 @@ public class AddBookmarkPage extends Activity
             InputMethodManager imm = getInputMethodManager();
             // Set the InputMethodManager to focus on the ListView so that it
             // can transfer the focus to mFolderNamer.
-            imm.focusIn(mListView);
+
+            //imm.focusIn(mListView);
+            // call ^ by reflection
+            try {
+                Method m = imm.getClass().getMethod("focusIn");
+                if (m != null) {
+                    m.invoke(imm, this);
+                }
+            } catch (Throwable t) {
+                // intentionally left blank
+            }
             imm.showSoftInput(mFolderNamer, InputMethodManager.SHOW_IMPLICIT);
         } else if (v == mRemoveLink) {
             if (!mEditingExisting) {

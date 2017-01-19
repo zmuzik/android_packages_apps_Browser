@@ -194,17 +194,6 @@ public class BrowserConstants {
     public final static String EXTRA_SHARE_FAVICON = "share_favicon";
 
     /**
-     * Sends the given string using an Intent with {@link Intent#ACTION_SEND} and a mime type
-     * of text/plain. The string is put into {@link Intent#EXTRA_TEXT}.
-     *
-     * @param context the context used to start the activity
-     * @param string the string to send
-     */
-    public static final void sendString(Context context, String string) {
-        sendString(context, string, context.getString(com.android.internal.R.string.sendText));
-    }
-
-    /**
      *  Find an application to handle the given string and, if found, invoke
      *  it with the given string as a parameter.
      *  @param c Context used to launch the new activity.

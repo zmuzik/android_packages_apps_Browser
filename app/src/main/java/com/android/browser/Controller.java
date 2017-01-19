@@ -94,6 +94,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URLEncoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -661,7 +662,7 @@ public class Controller
         mUi.onPause();
         mNetworkHandler.onPause();
 
-        WebView.disablePlatformNotifications();
+        //WebView.disablePlatformNotifications();
         NfcHandler.unregister(mActivity);
         if (sThumbnailBitmap != null) {
             sThumbnailBitmap.recycle();
@@ -711,7 +712,7 @@ public class Controller
 
         mUi.onResume();
         mNetworkHandler.onResume();
-        WebView.enablePlatformNotifications();
+        //WebView.enablePlatformNotifications();
         NfcHandler.register(mActivity, this);
         if (mVoiceResult != null) {
             mUi.onVoiceResult(mVoiceResult);
@@ -985,7 +986,7 @@ public class Controller
                 new AsyncTask<Void, Void, String[]>() {
             @Override
             public String[] doInBackground(Void... unused) {
-                return Browser.getVisitedHistory(mActivity.getContentResolver());
+                return BrowserConstants.getVisitedHistory(mActivity.getContentResolver());
             }
             @Override
             public void onPostExecute(String[] result) {
@@ -1016,7 +1017,8 @@ public class Controller
         if (username != null && password != null) {
             handler.proceed(username, password);
         } else {
-            if (tab.inForeground() && !handler.suppressDialog()) {
+            //XXX
+            if (tab.inForeground() /**&& !handler.suppressDialog() */) {
                 mPageDialogsHandler.showHttpAuthentication(tab, handler, host, realm);
             } else {
                 handler.cancel();
@@ -1688,7 +1690,7 @@ public class Controller
                 break;
 
             case R.id.dump_nav_menu_id:
-                getCurrentTopWebView().debugDump();
+                //getCurrentTopWebView().debugDump();
                 break;
 
             case R.id.zoom_in_menu_id:
@@ -1953,7 +1955,7 @@ public class Controller
                 AddBookmarkPage.class);
         i.putExtra(BrowserContract.Bookmarks.URL, w.getUrl());
         i.putExtra(BrowserContract.Bookmarks.TITLE, w.getTitle());
-        String touchIconUrl = w.getTouchIconUrl();
+        String touchIconUrl = getTouchIconUrl(w);
         if (touchIconUrl != null) {
             i.putExtra(AddBookmarkPage.TOUCH_ICON_URL, touchIconUrl);
             WebSettings settings = w.getSettings();
@@ -1973,6 +1975,19 @@ public class Controller
         // star on the title bar.
         i.putExtra("gravity", Gravity.RIGHT | Gravity.TOP);
         return i;
+    }
+
+    static String getTouchIconUrl(WebView wv) {
+        if (wv == null) return null;
+        try {
+            Method m = wv.getClass().getMethod("getTouchIconUrl");
+            if (m == null) return null;
+            Object result = m.invoke(wv);
+            return (String) result;
+        } catch (Throwable t) {
+            //intentionally left blank
+        }
+        return null;
     }
 
     // file chooser
@@ -2008,7 +2023,7 @@ public class Controller
 
     static Bitmap createScreenshot(WebView view, int width, int height) {
         if (view == null || view.getContentHeight() == 0
-                || view.getContentWidth() == 0) {
+                || getContentWidth(view) == 0) {
             return null;
         }
         // We render to a bitmap 2x the desired size so that we can then
@@ -2027,7 +2042,7 @@ public class Controller
                     Bitmap.createBitmap(scaledWidth, scaledHeight, Bitmap.Config.RGB_565);
         }
         Canvas canvas = new Canvas(sThumbnailBitmap);
-        int contentWidth = view.getContentWidth();
+        int contentWidth = getContentWidth(view);
         float overviewScale = scaledWidth / (view.getScale() * contentWidth);
         if (view instanceof BrowserWebView) {
             int dy = -((BrowserWebView)view).getTitleHeight();
@@ -2045,6 +2060,19 @@ public class Controller
                 width, height, true);
         canvas.setBitmap(null);
         return ret;
+    }
+
+    static int getContentWidth(WebView wv) {
+        if (wv == null) return 0;
+        try {
+            Method method = wv.getClass().getMethod("getContentWidth");
+            if (method == null) return 0;
+            Object result = method.invoke(wv);
+            return (Integer) result;
+        } catch (Throwable t) {
+            //intentionally left blank
+        }
+        return 0;
     }
 
     private void updateScreenshot(Tab tab) {
