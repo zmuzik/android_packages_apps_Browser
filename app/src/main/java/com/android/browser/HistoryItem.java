@@ -23,6 +23,8 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
+import com.android.browser.os.BrowserConstants;
+
 /**
  *  Layout representing a history item in the classic history viewer.
  */
@@ -81,7 +83,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
             // Uncheck ourseves. When the bookmark is actually added,
             // we will be notified
             setIsBookmark(false);
-            Browser.saveBookmark(getContext(), getName(), mUrl);
+            BrowserConstants.saveBookmark(getContext(), getName(), mUrl);
         } else {
             Bookmarks.removeFromBookmarks(getContext(),
                     getContext().getContentResolver(), mUrl, getName());

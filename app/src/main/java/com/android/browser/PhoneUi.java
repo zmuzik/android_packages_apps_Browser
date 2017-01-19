@@ -68,7 +68,7 @@ public class PhoneUi extends BaseUi {
         mNavigationBar = (NavigationBarPhone) mTitleBar.getNavigationBar();
         TypedValue heightValue = new TypedValue();
         browser.getTheme().resolveAttribute(
-                com.android.internal.R.attr.actionBarSize, heightValue, true);
+                android.R.attr.actionBarSize, heightValue, true);
         mActionBarHeight = TypedValue.complexToDimensionPixelSize(heightValue.data,
                 browser.getResources().getDisplayMetrics());
     }
@@ -381,7 +381,7 @@ public class PhoneUi extends BaseUi {
         mNavScreen.mScroller.finishScroller();
         Drawable contentDrawable = tabview.mImage.getDrawable();
         int toLeft = 0;
-        int toTop = (tab.getWebView() != null) ? tab.getWebView().getVisibleTitleHeight() : 0;
+        int toTop = 0;
         int toRight = mContentView.getWidth();
         int width = contentDrawable.getIntrinsicWidth();
         int height = contentDrawable.getIntrinsicHeight();
