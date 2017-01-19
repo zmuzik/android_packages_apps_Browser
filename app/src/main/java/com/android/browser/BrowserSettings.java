@@ -43,6 +43,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewDatabase;
 
 import com.android.browser.homepages.HomeProvider;
+import com.android.browser.os.BrowserConstants;
 import com.android.browser.provider.BrowserProvider;
 import com.android.browser.search.SearchEngine;
 import com.android.browser.search.SearchEngines;
@@ -439,8 +440,8 @@ public class BrowserSettings implements OnSharedPreferenceChangeListener,
 
     public void clearHistory() {
         ContentResolver resolver = mContext.getContentResolver();
-        Browser.clearHistory(resolver);
-        Browser.clearSearches(resolver);
+        BrowserConstants.clearHistory(resolver);
+        BrowserConstants.clearSearches(resolver);
     }
 
     public void clearFormData() {
