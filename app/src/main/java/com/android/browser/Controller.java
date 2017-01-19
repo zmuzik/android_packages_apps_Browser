@@ -49,8 +49,10 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceActivity;
 import android.provider.Browser;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Images;
+
+import com.android.browser.os.BrowserConstants;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.BrowserContract.Images;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.Intents.Insert;
 import android.speech.RecognizerIntent;
@@ -587,7 +589,7 @@ public class Controller
      * @param favicon Bitmap of the favicon for the page.  Stored in the Intent
      *          with {@link Browser#EXTRA_SHARE_FAVICON}
      * @param screenshot Bitmap of a screenshot of the page.  Stored in the
-     *          Intent with {@link Browser#EXTRA_SHARE_SCREENSHOT}
+     *          Intent with {@link BrowserConstants#EXTRA_SHARE_SCREENSHOT}
      */
     static final void sharePage(Context c, String title, String url,
             Bitmap favicon, Bitmap screenshot) {
@@ -595,8 +597,8 @@ public class Controller
         send.setType("text/plain");
         send.putExtra(Intent.EXTRA_TEXT, url);
         send.putExtra(Intent.EXTRA_SUBJECT, title);
-        send.putExtra(Browser.EXTRA_SHARE_FAVICON, favicon);
-        send.putExtra(Browser.EXTRA_SHARE_SCREENSHOT, screenshot);
+        send.putExtra(BrowserConstants.EXTRA_SHARE_FAVICON, favicon);
+        send.putExtra(BrowserConstants.EXTRA_SHARE_SCREENSHOT, screenshot);
         try {
             c.startActivity(Intent.createChooser(send, c.getString(
                     R.string.choosertitle_sharevia)));

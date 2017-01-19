@@ -26,13 +26,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Combined;
-import android.provider.BrowserContract.Images;
 import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebIconDatabase;
 import android.widget.Toast;
+
+import com.android.browser.os.BrowserContract;
 
 import java.io.ByteArrayOutputStream;
 
@@ -154,8 +153,8 @@ public class Bookmarks {
     }
 
     static final String QUERY_BOOKMARKS_WHERE =
-            Combined.URL + " == ? OR " +
-            Combined.URL + " == ?";
+            BrowserContract.Combined.URL + " == ? OR " +
+            BrowserContract.Combined.URL + " == ?";
 
     public static Cursor queryCombinedForUrl(ContentResolver cr,
             String originalUrl, String url) {
@@ -172,8 +171,8 @@ public class Bookmarks {
         // account redirects.
     
         final String[] selArgs = new String[] { originalUrl, url };
-        final String[] projection = new String[] { Combined.URL };
-        return cr.query(Combined.CONTENT_URI, projection, QUERY_BOOKMARKS_WHERE, selArgs, null);
+        final String[] projection = new String[] { BrowserContract.Combined.URL };
+        return cr.query(BrowserContract.Combined.CONTENT_URI, projection, QUERY_BOOKMARKS_WHERE, selArgs, null);
     }
 
     // Strip the query from the given url.
@@ -213,7 +212,7 @@ public class Bookmarks {
 
                 // The Images update will insert if it doesn't exist
                 ContentValues values = new ContentValues();
-                values.put(Images.FAVICON, os.toByteArray());
+                values.put(BrowserContract.Images.FAVICON, os.toByteArray());
                 updateImages(cr, originalUrl, values);
                 updateImages(cr, url, values);
                 return null;
@@ -223,7 +222,7 @@ public class Bookmarks {
                     final String url, ContentValues values) {
                 String iurl = removeQuery(url);
                 if (!TextUtils.isEmpty(iurl)) {
-                    values.put(Images.URL, iurl);
+                    values.put(BrowserContract.Images.URL, iurl);
                     cr.update(BrowserContract.Images.CONTENT_URI, values, null, null);
                 }
             }

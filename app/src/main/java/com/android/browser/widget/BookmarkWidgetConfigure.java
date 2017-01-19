@@ -25,7 +25,6 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.BrowserContract.Accounts;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -33,6 +32,7 @@ import android.widget.ListView;
 
 import com.android.browser.AddBookmarkPage.BookmarkAccount;
 import com.android.browser.R;
+import com.android.browser.os.BrowserContract;
 import com.android.browser.provider.BrowserProvider2;
 
 public class BookmarkWidgetConfigure extends ListActivity
@@ -117,9 +117,9 @@ public class BookmarkWidgetConfigure extends ListActivity
     static class AccountsLoader extends CursorLoader {
 
         static final String[] PROJECTION = new String[] {
-            Accounts.ACCOUNT_NAME,
-            Accounts.ACCOUNT_TYPE,
-            Accounts.ROOT_ID,
+            BrowserContract.Accounts.ACCOUNT_NAME,
+            BrowserContract.Accounts.ACCOUNT_TYPE,
+            BrowserContract.Accounts.ROOT_ID,
         };
 
         static final int COLUMN_INDEX_ACCOUNT_NAME = 0;
@@ -127,7 +127,7 @@ public class BookmarkWidgetConfigure extends ListActivity
         static final int COLUMN_INDEX_ROOT_ID = 2;
 
         public AccountsLoader(Context context) {
-            super(context, Accounts.CONTENT_URI
+            super(context, BrowserContract.Accounts.CONTENT_URI
                     .buildUpon()
                     .appendQueryParameter(BrowserProvider2.PARAM_ALLOW_EMPTY_ACCOUNTS, "false")
                     .build(), PROJECTION, null, null, null);

@@ -40,8 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.OverScroller;
 import android.widget.TextView;
 
-import com.android.internal.R;
-
 import java.util.List;
 
 /**
@@ -126,15 +124,6 @@ public class ScrollerView extends FrameLayout {
      * drags/flings if multiple pointers are used.
      */
     private int mActivePointerId = INVALID_POINTER;
-
-    /**
-     * The StrictMode "critical time span" objects to catch animation
-     * stutters.  Non-null when a time-sensitive animation is
-     * in-flight.  Must call finish() on them when done animating.
-     * These are no-ops on user builds.
-     */
-    private StrictMode.Span mScrollStrictSpan = null;  // aka "drag"
-    private StrictMode.Span mFlingStrictSpan = null;
 
     /**
      * Sentinel value for no current active pointer.
