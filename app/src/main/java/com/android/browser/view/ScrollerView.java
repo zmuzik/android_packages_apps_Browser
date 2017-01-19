@@ -147,20 +147,14 @@ public class ScrollerView extends FrameLayout {
     }
 
     public ScrollerView(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.scrollViewStyle);
+        this(context, attrs, android.R.attr.scrollViewStyle);
     }
 
     public ScrollerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initScrollView();
-
-        TypedArray a =
-            context.obtainStyledAttributes(attrs, com.android.internal.R.styleable.ScrollView, defStyle, 0);
-
         //XXX
         setFillViewport(false);
-
-        a.recycle();
     }
 
     private void initScrollView() {
@@ -527,10 +521,10 @@ public class ScrollerView extends FrameLayout {
                 mLastMotionY = y;
                 initVelocityTrackerIfNotExists();
                 mVelocityTracker.addMovement(ev);
-                if (mScrollStrictSpan == null) {
-                    mScrollStrictSpan = StrictMode
-                            .enterCriticalSpan("ScrollView-scroll");
-                }
+//                if (mScrollStrictSpan == null) {
+//                    mScrollStrictSpan = StrictMode
+//                            .enterCriticalSpan("ScrollView-scroll");
+//                }
             } else {
                 final float ocoord = mHorizontal ? ev.getY(pointerIndex) : ev
                         .getX(pointerIndex);
@@ -569,10 +563,10 @@ public class ScrollerView extends FrameLayout {
              * flinged.
              */
             mIsBeingDragged = !mScroller.isFinished();
-            if (mIsBeingDragged && mScrollStrictSpan == null) {
-                mScrollStrictSpan = StrictMode
-                        .enterCriticalSpan("ScrollView-scroll");
-            }
+//            if (mIsBeingDragged && mScrollStrictSpan == null) {
+//                mScrollStrictSpan = StrictMode
+//                        .enterCriticalSpan("ScrollView-scroll");
+//            }
             mIsOrthoDragged = false;
             final float ocoord = mHorizontal ? ev.getY() : ev.getX();
             mLastOrthoCoord = ocoord;
@@ -623,10 +617,10 @@ public class ScrollerView extends FrameLayout {
                  */
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
-                    if (mFlingStrictSpan != null) {
-                        mFlingStrictSpan.finish();
-                        mFlingStrictSpan = null;
-                    }
+//                    if (mFlingStrictSpan != null) {
+//                        mFlingStrictSpan.finish();
+//                        mFlingStrictSpan = null;
+//                    }
                 }
 
                 // Remember where the motion event started
@@ -793,55 +787,55 @@ public class ScrollerView extends FrameLayout {
         }
     }
 
-    @Override
-    public boolean onGenericMotionEvent(MotionEvent event) {
-        if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
-            switch (event.getAction()) {
-            case MotionEvent.ACTION_SCROLL: {
-                if (!mIsBeingDragged) {
-                    if (mHorizontal) {
-                        final float hscroll = event
-                                .getAxisValue(MotionEvent.AXIS_HSCROLL);
-                        if (hscroll != 0) {
-                            final int delta = (int) (hscroll * getHorizontalScrollFactor());
-                            final int range = getScrollRange();
-                            int oldScrollX = getScrollX();
-                            int newScrollX = oldScrollX - delta;
-                            if (newScrollX < 0) {
-                                newScrollX = 0;
-                            } else if (newScrollX > range) {
-                                newScrollX = range;
-                            }
-                            if (newScrollX != oldScrollX) {
-                                super.scrollTo(newScrollX, getScrollY());
-                                return true;
-                            }
-                        }
-                    } else {
-                        final float vscroll = event
-                                .getAxisValue(MotionEvent.AXIS_VSCROLL);
-                        if (vscroll != 0) {
-                            final int delta = (int) (vscroll * getVerticalScrollFactor());
-                            final int range = getScrollRange();
-                            int oldScrollY = getScrollY();
-                            int newScrollY = oldScrollY - delta;
-                            if (newScrollY < 0) {
-                                newScrollY = 0;
-                            } else if (newScrollY > range) {
-                                newScrollY = range;
-                            }
-                            if (newScrollY != oldScrollY) {
-                                super.scrollTo(getScrollX(), newScrollY);
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-            }
-        }
-        return super.onGenericMotionEvent(event);
-    }
+//    @Override
+//    public boolean onGenericMotionEvent(MotionEvent event) {
+//        if ((event.getSource() & InputDevice.SOURCE_CLASS_POINTER) != 0) {
+//            switch (event.getAction()) {
+//            case MotionEvent.ACTION_SCROLL: {
+//                if (!mIsBeingDragged) {
+//                    if (mHorizontal) {
+//                        final float hscroll = event
+//                                .getAxisValue(MotionEvent.AXIS_HSCROLL);
+//                        if (hscroll != 0) {
+//                            final int delta = (int) (hscroll * getHorizontalScrollFactor());
+//                            final int range = getScrollRange();
+//                            int oldScrollX = getScrollX();
+//                            int newScrollX = oldScrollX - delta;
+//                            if (newScrollX < 0) {
+//                                newScrollX = 0;
+//                            } else if (newScrollX > range) {
+//                                newScrollX = range;
+//                            }
+//                            if (newScrollX != oldScrollX) {
+//                                super.scrollTo(newScrollX, getScrollY());
+//                                return true;
+//                            }
+//                        }
+//                    } else {
+//                        final float vscroll = event
+//                                .getAxisValue(MotionEvent.AXIS_VSCROLL);
+//                        if (vscroll != 0) {
+//                            final int delta = (int) (vscroll * getVerticalScrollFactor());
+//                            final int range = getScrollRange();
+//                            int oldScrollY = getScrollY();
+//                            int newScrollY = oldScrollY - delta;
+//                            if (newScrollY < 0) {
+//                                newScrollY = 0;
+//                            } else if (newScrollY > range) {
+//                                newScrollY = range;
+//                            }
+//                            if (newScrollY != oldScrollY) {
+//                                super.scrollTo(getScrollX(), newScrollY);
+//                                return true;
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            }
+//        }
+//        return super.onGenericMotionEvent(event);
+//    }
 
     protected void onOrthoDrag(View draggedView, float distance) {
     }
@@ -1283,10 +1277,10 @@ public class ScrollerView extends FrameLayout {
         } else {
             if (!mScroller.isFinished()) {
                 mScroller.abortAnimation();
-                if (mFlingStrictSpan != null) {
-                    mFlingStrictSpan.finish();
-                    mFlingStrictSpan = null;
-                }
+//                if (mFlingStrictSpan != null) {
+//                    mFlingStrictSpan.finish();
+//                    mFlingStrictSpan = null;
+//                }
             }
             scrollBy(dx, dy);
         }
@@ -1454,11 +1448,11 @@ public class ScrollerView extends FrameLayout {
 
             // Keep on drawing until the animation has finished.
             postInvalidate();
-        } else {
-            if (mFlingStrictSpan != null) {
-                mFlingStrictSpan.finish();
-                mFlingStrictSpan = null;
-            }
+//        } else {
+//            if (mFlingStrictSpan != null) {
+//                mFlingStrictSpan.finish();
+//                mFlingStrictSpan = null;
+//            }
         }
     }
 
@@ -1712,14 +1706,14 @@ public class ScrollerView extends FrameLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (mScrollStrictSpan != null) {
-            mScrollStrictSpan.finish();
-            mScrollStrictSpan = null;
-        }
-        if (mFlingStrictSpan != null) {
-            mFlingStrictSpan.finish();
-            mFlingStrictSpan = null;
-        }
+//        if (mScrollStrictSpan != null) {
+//            mScrollStrictSpan.finish();
+//            mScrollStrictSpan = null;
+//        }
+//        if (mFlingStrictSpan != null) {
+//            mFlingStrictSpan.finish();
+//            mFlingStrictSpan = null;
+//        }
     }
 
     @Override
@@ -1789,9 +1783,9 @@ public class ScrollerView extends FrameLayout {
                 mScroller.fling(getScrollX(), getScrollY(), 0, velocityY, 0, 0, 0,
                         Math.max(0, bottom - height), 0, height/2);
             }
-            if (mFlingStrictSpan == null) {
-                mFlingStrictSpan = StrictMode.enterCriticalSpan("ScrollView-fling");
-            }
+//            if (mFlingStrictSpan == null) {
+//                mFlingStrictSpan = StrictMode.enterCriticalSpan("ScrollView-fling");
+//            }
 
             invalidate();
         }
@@ -1802,10 +1796,10 @@ public class ScrollerView extends FrameLayout {
         mIsOrthoDragged = false;
         mDownView = null;
         recycleVelocityTracker();
-        if (mScrollStrictSpan != null) {
-            mScrollStrictSpan.finish();
-            mScrollStrictSpan = null;
-        }
+//        if (mScrollStrictSpan != null) {
+//            mScrollStrictSpan.finish();
+//            mScrollStrictSpan = null;
+//        }
     }
 
     /**
