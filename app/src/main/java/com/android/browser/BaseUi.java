@@ -52,10 +52,10 @@ import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import com.android.browser.Tab.SecurityState;
-import com.android.internal.view.menu.MenuBuilder;
 
 import java.util.List;
 
@@ -729,11 +729,12 @@ public abstract class BaseUi implements UI {
         }
     }
 
-    protected Menu getMenu() {
-        MenuBuilder menu = new MenuBuilder(mActivity);
-        mActivity.getMenuInflater().inflate(R.menu.browser, menu);
-        return menu;
-    }
+//    protected Menu getMenu() {
+//        MenuBuilder menu = new MenuBuilder(mActivity);
+//        PopupMenu popup = new PopupMenu(mContext, mMore);
+//        mActivity.getMenuInflater().inflate(R.menu.browser, menu);
+//        return menu;
+//    }
 
     public void setFullscreen(boolean enabled) {
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();

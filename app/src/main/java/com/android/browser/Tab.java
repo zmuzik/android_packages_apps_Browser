@@ -79,6 +79,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.security.Principal;
 import java.util.LinkedList;
@@ -1884,12 +1885,12 @@ class Tab implements PictureListener {
 
     protected void capture() {
         if (mMainView == null || mCapture == null) return;
-        if (mMainView.getContentWidth() <= 0 || mMainView.getContentHeight() <= 0) {
+        if (getContentWidth(mMainView) <= 0 || mMainView.getContentHeight() <= 0) {
             return;
         }
         Canvas c = new Canvas(mCapture);
         final int left = mMainView.getScrollX();
-        final int top = mMainView.getScrollY() + mMainView.getVisibleTitleHeight();
+        final int top = mMainView.getScrollY(); //mMainView.getVisibleTitleHeight() should always return 0
         int state = c.save();
         c.translate(-left, -top);
         float scale = mCaptureWidth / (float) mMainView.getWidth();
@@ -1918,6 +1919,19 @@ class Tab implements PictureListener {
                 updateListener.onThumbnailUpdated(this);
             }
         }
+    }
+
+    static int getContentWidth(WebView wv) {
+        if (wv == null) return 0;
+        try {
+            Method m = wv.getClass().getMethod("getContentWidth");
+            if (m == null) return 0;
+            Object result = m.invoke(wv);
+            return (Integer) result;
+        } catch (Throwable t) {
+            //intentionally left blank
+        }
+        return 0;
     }
 
     @Override
