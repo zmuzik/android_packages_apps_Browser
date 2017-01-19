@@ -16,6 +16,7 @@
 
 package com.android.browser.tests.utils;
 
+import com.android.browser.os.BrowserConstants;
 import com.android.browser.provider.BrowserProvider2;
 
 import java.io.File;
@@ -24,10 +25,9 @@ import java.io.FilenameFilter;
 import android.content.ContentValues;
 import android.database.ContentObserver;
 import android.net.Uri;
-import android.provider.Browser;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Bookmarks;
-import android.provider.BrowserContract.History;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.BrowserContract.Bookmarks;
+import com.android.browser.os.BrowserContract.History;
 import android.util.Log;
 
 /**
@@ -48,7 +48,7 @@ public abstract class BP2TestCaseHelper extends ProviderTestCase3<BrowserProvide
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        mLegacyObserver = new TriggeredObserver(Browser.BOOKMARKS_URI);
+        mLegacyObserver = new TriggeredObserver(BrowserConstants.BOOKMARKS_URI);
         mRootObserver = new TriggeredObserver(BrowserContract.AUTHORITY_URI);
         mBookmarksObserver = new TriggeredObserver(Bookmarks.CONTENT_URI);
         mHistoryObserver = new TriggeredObserver(History.CONTENT_URI);

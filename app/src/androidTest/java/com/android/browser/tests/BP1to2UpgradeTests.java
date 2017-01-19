@@ -16,24 +16,18 @@
 
 package com.android.browser.tests;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.provider.Browser;
+import android.test.suitebuilder.annotation.SmallTest;
+
+import com.android.browser.os.BrowserConstants;
+import com.android.browser.os.BrowserConstants.BookmarkColumns;
+import com.android.browser.os.BrowserContract.Bookmarks;
+import com.android.browser.os.BrowserContract.History;
 import com.android.browser.provider.BrowserProvider;
 import com.android.browser.tests.utils.BP2TestCaseHelper;
 
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
-import android.net.Uri;
-import android.provider.Browser;
-import android.provider.Browser.BookmarkColumns;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Bookmarks;
-import android.provider.BrowserContract.History;
-import android.provider.BrowserContract.Images;
-import android.test.suitebuilder.annotation.SmallTest;
-
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 @SmallTest
@@ -52,8 +46,8 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
      * Test that simply makes sure BP1->BP2 with no changes works as intended
      */
     public void testStockUpgrade() {
-        Cursor c = mBp1.query(Browser.BOOKMARKS_URI,
-                new String[] { BookmarkColumns.URL }, null, null,
+        Cursor c = mBp1.query(BrowserConstants.BOOKMARKS_URI,
+                new String[]{BookmarkColumns.URL}, null, null,
                 BookmarkColumns.URL + " DESC");
         ArrayList<String> urls = new ArrayList<String>(c.getCount());
         while (c.moveToNext()) {
@@ -61,8 +55,8 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
         }
         c.close();
         // First, test the public API (which will hit BP2)
-        c = getMockContentResolver().query(Browser.BOOKMARKS_URI,
-                new String[] { BookmarkColumns.URL }, null, null,
+        c = getMockContentResolver().query(BrowserConstants.BOOKMARKS_URI,
+                new String[]{BookmarkColumns.URL}, null, null,
                 BookmarkColumns.URL + " DESC");
         assertEquals(urls.size(), c.getCount());
         int i = 0;
@@ -72,7 +66,7 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
         c.close();
         // Next, test BP2's new API (not a public API)
         c = getMockContentResolver().query(Bookmarks.CONTENT_URI,
-                new String[] { Bookmarks.URL }, null, null,
+                new String[]{Bookmarks.URL}, null, null,
                 Bookmarks.URL + " DESC");
         assertEquals(urls.size(), c.getCount());
         i = 0;
@@ -87,10 +81,10 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
         values.put(BookmarkColumns.URL, "http://slashdot.org/");
         values.put(BookmarkColumns.BOOKMARK, 0);
         values.put(BookmarkColumns.DATE, 123456);
-        mBp1.insert(Browser.BOOKMARKS_URI, values);
+        mBp1.insert(BrowserConstants.BOOKMARKS_URI, values);
         // First, test internal API
         Cursor c = getMockContentResolver().query(History.CONTENT_URI,
-                new String[] { History.URL, History.DATE_LAST_VISITED },
+                new String[]{History.URL, History.DATE_LAST_VISITED},
                 null, null, null);
         assertEquals(1, c.getCount());
         assertTrue(c.moveToFirst());
@@ -98,28 +92,28 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
         assertEquals(123456, c.getInt(1));
         c.close();
         // Next, test public API
-        c = getMockContentResolver().query(Browser.BOOKMARKS_URI,
-                Browser.HISTORY_PROJECTION, BookmarkColumns.BOOKMARK + " = 0",
+        c = getMockContentResolver().query(BrowserConstants.BOOKMARKS_URI,
+                BrowserConstants.HISTORY_PROJECTION, BookmarkColumns.BOOKMARK + " = 0",
                 null, null);
         assertEquals("public API", 1, c.getCount());
         assertTrue(c.moveToFirst());
         assertEquals("http://slashdot.org/",
-                c.getString(Browser.HISTORY_PROJECTION_URL_INDEX));
-        assertEquals(123456, c.getInt(Browser.HISTORY_PROJECTION_DATE_INDEX));
+                c.getString(BrowserConstants.HISTORY_PROJECTION_URL_INDEX));
+        assertEquals(123456, c.getInt(BrowserConstants.HISTORY_PROJECTION_DATE_INDEX));
         c.close();
     }
 
     public void testPreserveBookmarks() {
         // First, nuke 'er (deletes stock bookmarks)
-        mBp1.delete(Browser.BOOKMARKS_URI, null, null);
+        mBp1.delete(BrowserConstants.BOOKMARKS_URI, null, null);
         ContentValues values = new ContentValues();
         values.put(BookmarkColumns.URL, "http://slashdot.org/");
         values.put(BookmarkColumns.BOOKMARK, 1);
         values.put(BookmarkColumns.CREATED, 123456);
-        mBp1.insert(Browser.BOOKMARKS_URI, values);
+        mBp1.insert(BrowserConstants.BOOKMARKS_URI, values);
         // First, test internal API
         Cursor c = getMockContentResolver().query(Bookmarks.CONTENT_URI,
-                new String[] { Bookmarks.URL, Bookmarks.DATE_CREATED },
+                new String[]{Bookmarks.URL, Bookmarks.DATE_CREATED},
                 null, null, null);
         assertEquals(1, c.getCount());
         assertTrue(c.moveToFirst());
@@ -127,8 +121,8 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
         assertEquals(123456, c.getInt(1));
         c.close();
         // Next, test public API
-        c = getMockContentResolver().query(Browser.BOOKMARKS_URI,
-                new String[] { BookmarkColumns.URL, BookmarkColumns.CREATED },
+        c = getMockContentResolver().query(BrowserConstants.BOOKMARKS_URI,
+                new String[]{BookmarkColumns.URL, BookmarkColumns.CREATED},
                 BookmarkColumns.BOOKMARK + " = 1", null, null);
         assertEquals("public API", 1, c.getCount());
         assertTrue(c.moveToFirst());
@@ -138,7 +132,7 @@ public class BP1to2UpgradeTests extends BP2TestCaseHelper {
     }
 
     public void testEmptyUpgrade() {
-        mBp1.delete(Browser.BOOKMARKS_URI, null, null);
+        mBp1.delete(BrowserConstants.BOOKMARKS_URI, null, null);
         Cursor c = getMockContentResolver().query(Bookmarks.CONTENT_URI,
                 null, null, null, null);
         assertEquals(0, c.getCount());

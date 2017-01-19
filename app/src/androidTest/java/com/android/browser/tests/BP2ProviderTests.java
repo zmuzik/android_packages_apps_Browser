@@ -24,8 +24,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.net.Uri;
-import android.provider.BrowserContract;
-import android.provider.BrowserContract.Images;
+import com.android.browser.os.BrowserContract;
+import com.android.browser.os.BrowserContract.Images;
 import android.test.suitebuilder.annotation.SmallTest;
 
 import java.io.ByteArrayOutputStream;

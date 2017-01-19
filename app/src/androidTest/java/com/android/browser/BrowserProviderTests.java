@@ -16,6 +16,7 @@
 
 package com.android.browser;
 
+import com.android.browser.os.BrowserConstants;
 import com.android.browser.provider.BrowserProvider;
 import com.android.browser.provider.BrowserProvider2;
 import com.android.browser.tests.utils.ProviderTestCase3;
@@ -24,7 +25,7 @@ import android.app.SearchManager;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.provider.BrowserContract;
+import com.android.browser.os.BrowserContract;
 import android.test.suitebuilder.annotation.MediumTest;
 
 import java.util.ArrayList;
@@ -146,7 +147,7 @@ public class BrowserProviderTests extends ProviderTestCase3<BrowserProvider2> {
     private void addBookmark(String url, String title) {
         Uri uri = insertBookmark(url, title);
         assertNotNull(uri);
-        assertFalse(android.provider.Browser.BOOKMARKS_URI.equals(uri));
+        assertFalse(BrowserConstants.BOOKMARKS_URI.equals(uri));
         mDeleteUris.add(uri);
     }
 
@@ -158,7 +159,7 @@ public class BrowserProviderTests extends ProviderTestCase3<BrowserProvider2> {
         values.put("date", 0);
         values.put("created", 0);
         values.put("bookmark", 1);
-        return getMockContentResolver().insert(android.provider.Browser.BOOKMARKS_URI,
+        return getMockContentResolver().insert(BrowserConstants.BOOKMARKS_URI,
                 values);
     }
 
