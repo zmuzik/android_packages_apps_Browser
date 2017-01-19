@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import java.io.StringBufferInputStream;
 
 public class HomeProvider extends ContentProvider {
 
@@ -118,10 +119,11 @@ public class HomeProvider extends ContentProvider {
         } catch (Exception e) {}
         if ("browser:incognito".equals(url)) {
             try {
-                Resources res = context.getResources();
-                InputStream ins = res.openRawResource(
-                        com.android.internal.R.raw.incognito_mode_start_page);
-                return new WebResourceResponse("text/html", "utf8", ins);
+                //XXX TODO replace with proper page
+//                Resources res = context.getResources();
+//                InputStream ins = res.openRawResource(
+//                        com.android.internal.R.raw.incognito_mode_start_page);
+                return new WebResourceResponse("text/html", "utf8", new StringBufferInputStream(""));
             } catch (NotFoundException ex) {
                 // This shouldn't happen, but try and gracefully handle it jic
                 Log.w(TAG, "Failed opening raw.incognito_mode_start_page", ex);
