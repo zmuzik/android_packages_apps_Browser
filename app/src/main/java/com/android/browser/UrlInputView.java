@@ -237,7 +237,7 @@ public class UrlInputView extends AutoCompleteTextView
                         .getSearchEngine();
                 if (searchEngine == null) return;
                 SearchEngineInfo engineInfo = SearchEngines
-                        .getSearchEngineInfo(mContext, searchEngine.getName());
+                        .getSearchEngineInfo(getContext(), searchEngine.getName());
                 if (engineInfo == null) return;
                 url = engineInfo.getSearchUriForQuery(url);
                 // mLister.onAction can take it from here without logging
