@@ -33,16 +33,13 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import java.io.IOException;
-import java.io.InputStream;
+import com.android.browser.os.ResponseUtils;
+import com.android.browser.os.Streams;
+
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.IllegalCharsetNameException;
-import java.nio.charset.UnsupportedCharsetException;
-import libcore.io.Streams;
-import libcore.net.http.ResponseUtils;
 
 public class GoogleAccountLogin implements Runnable,
         AccountManagerCallback<Bundle>, OnCancelListener {
@@ -74,7 +71,7 @@ public class GoogleAccountLogin implements Runnable,
     private String mUserAgent;
 
     private GoogleAccountLogin(Activity activity, Account account,
-            Runnable runnable) {
+                               Runnable runnable) {
         mActivity = activity;
         mAccount = account;
         mWebView = new WebView(mActivity);
@@ -92,6 +89,7 @@ public class GoogleAccountLogin implements Runnable,
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;
             }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 done();
@@ -125,7 +123,7 @@ public class GoogleAccountLogin implements Runnable,
             int status = connection.getResponseCode();
             if (status != HttpURLConnection.HTTP_OK) {
                 Log.d(LOGTAG, "LOGIN_FAIL: Bad status from auth url "
-                      + status + ": " + connection.getResponseMessage());
+                        + status + ": " + connection.getResponseMessage());
                 // Invalidate the tokens once just in case the 403 was for other
                 // reasons.
                 if (status == HttpURLConnection.HTTP_FORBIDDEN && !mTokensInvalidated) {
@@ -162,7 +160,8 @@ public class GoogleAccountLogin implements Runnable,
                         BrowserSettings.getFactoryResetHomeUrl(mActivity))
                 .build().toString();
         mActivity.runOnUiThread(new Runnable() {
-            @Override public void run() {
+            @Override
+            public void run() {
                 // Check mRunnable in case the request has been canceled.  This
                 // is most likely not necessary as run() is the only non-UI
                 // thread that calls done() but I am paranoid.
@@ -218,7 +217,7 @@ public class GoogleAccountLogin implements Runnable,
     // Start the login process if auto-login is enabled and the user is not
     // already logged in.
     public static void startLoginIfNeeded(Activity activity,
-            Runnable runnable) {
+                                          Runnable runnable) {
         // Already logged in?
         if (isLoggedIn()) {
             runnable.run();
@@ -242,7 +241,7 @@ public class GoogleAccountLogin implements Runnable,
         mProgressDialog = ProgressDialog.show(mActivity,
                 mActivity.getString(R.string.pref_autologin_title),
                 mActivity.getString(R.string.pref_autologin_progress,
-                                    mAccount.name),
+                        mAccount.name),
                 true /* indeterminate */,
                 true /* cancelable */,
                 this);
