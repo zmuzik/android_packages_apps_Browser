@@ -854,26 +854,12 @@ public class Controller
         // update the bookmark database for favicon
         maybeUpdateFavicon(tab, null, url, favicon);
 
-        Performance.tracePageStart(url);
-
-        // Performance probe
-        if (false) {
-            Performance.onPageStarted();
-        }
-
     }
 
     @Override
     public void onPageFinished(Tab tab) {
         mCrashRecoveryHandler.backupState();
         mUi.onTabDataChanged(tab);
-
-        // Performance probe
-        if (false) {
-            Performance.onPageFinished(tab.getUrl());
-         }
-
-        Performance.tracePageFinished();
     }
 
     @Override
