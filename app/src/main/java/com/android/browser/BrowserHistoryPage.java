@@ -38,6 +38,8 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Browser;
+
+import com.android.browser.os.BrowserConstants;
 import com.android.browser.os.BrowserContract;
 import com.android.browser.os.BrowserContract.Combined;
 import android.view.ContextMenu;
@@ -325,7 +327,7 @@ public class BrowserHistoryPage extends Fragment
 
         @Override
         public void run() {
-            Browser.clearHistory(mResolver);
+            BrowserConstants.clearHistory(mResolver);
         }
     }
 
@@ -408,18 +410,18 @@ public class BrowserHistoryPage extends Fragment
                     Bookmarks.removeFromBookmarks(activity, activity.getContentResolver(),
                             url, title);
                 } else {
-                    Browser.saveBookmark(activity, title, url);
+                    BrowserConstants.saveBookmark(activity, title, url);
                 }
                 return true;
             case R.id.share_link_context_menu_id:
-                Browser.sendString(activity, url,
+                BrowserConstants.sendString(activity, url,
                         activity.getText(R.string.choosertitle_sharevia).toString());
                 return true;
             case R.id.copy_url_context_menu_id:
                 copy(url);
                 return true;
             case R.id.delete_context_menu_id:
-                Browser.deleteFromHistory(activity.getContentResolver(), url);
+                BrowserConstants.deleteFromHistory(activity.getContentResolver(), url);
                 return true;
             case R.id.homepage_context_menu_id:
                 BrowserSettings.getInstance().setHomePage(url);
