@@ -35,7 +35,7 @@ public class YesNoPreference extends DialogPreference {
         this(context, attrs, defStyleAttr, 0);
     }
     public YesNoPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.yesNoPreferenceStyle);
+        this(context, attrs, android.R.attr.yesNoPreferenceStyle);
     }
     public YesNoPreference(Context context) {
         this(context, null);

@@ -88,9 +88,9 @@ public class BreadCrumbView extends LinearLayout implements OnClickListener {
         setFocusable(true);
         mUseBackButton = false;
         mCrumbs = new ArrayList<Crumb>();
-        TypedArray a = mContext.obtainStyledAttributes(com.android.internal.R.styleable.Theme);
-        mSeparatorDrawable = a.getDrawable(com.android.internal.R.styleable.Theme_dividerVertical);
-        a.recycle();
+//        TypedArray a = mContext.obtainStyledAttributes(com.android.internal.R.styleable.Theme);
+//        mSeparatorDrawable = a.getDrawable(com.android.internal.R.styleable.Theme_dividerVertical);
+//        a.recycle();
         float density = mContext.getResources().getDisplayMetrics().density;
         mDividerPadding = DIVIDER_PADDING * density;
         mCrumbPadding = (int) (CRUMB_PADDING * density);

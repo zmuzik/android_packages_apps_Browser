@@ -24,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
+
 /**
  * @hide
  */
@@ -34,24 +35,22 @@ public class SeekBarPreference extends Preference
     private boolean mTrackingTouch;
     public SeekBarPreference(
             Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        TypedArray a = context.obtainStyledAttributes(
-                attrs, com.android.internal.R.styleable.ProgressBar, defStyleAttr, defStyleRes);
-        setMax(a.getInt(com.android.internal.R.styleable.ProgressBar_max, mMax));
-        a.recycle();
-        a = context.obtainStyledAttributes(attrs,
-                com.android.internal.R.styleable.SeekBarPreference, defStyleAttr, defStyleRes);
-        final int layoutResId = a.getResourceId(
-                com.android.internal.R.styleable.SeekBarPreference_layout,
-                com.android.internal.R.layout.preference_widget_seekbar);
-        a.recycle();
-        setLayoutResource(layoutResId);
+        super(context, attrs, defStyleRes);
+        setLayoutResource(com.android.browser.R.layout.preference_widget_seekbar);
+
+        for (int i=0;i<attrs.getAttributeCount();i++) {
+            String attr = attrs.getAttributeName(i);
+            String val  = attrs.getAttributeValue(i);
+            if (attr.equalsIgnoreCase("max")) {
+                mMax = Integer.parseInt(val);
+            }
+        }
     }
     public SeekBarPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         this(context, attrs, defStyleAttr, 0);
     }
     public SeekBarPreference(Context context, AttributeSet attrs) {
-        this(context, attrs, com.android.internal.R.attr.seekBarPreferenceStyle);
+        this(context, attrs, 0);
     }
     public SeekBarPreference(Context context) {
         this(context, null);
@@ -60,7 +59,7 @@ public class SeekBarPreference extends Preference
     protected void onBindView(View view) {
         super.onBindView(view);
         SeekBar seekBar = (SeekBar) view.findViewById(
-                com.android.internal.R.id.seekbar);
+                com.android.browser.R.id.seekbar);
         seekBar.setOnSeekBarChangeListener(this);
         seekBar.setMax(mMax);
         seekBar.setProgress(mProgress);
@@ -80,7 +79,7 @@ public class SeekBarPreference extends Preference
         if (event.getAction() != KeyEvent.ACTION_DOWN) {
             return false;
         }
-        SeekBar seekBar = (SeekBar) v.findViewById(com.android.internal.R.id.seekbar);
+        SeekBar seekBar = (SeekBar) v.findViewById(com.android.browser.R.id.seekbar);
         if (seekBar == null) {
             return false;
         }
