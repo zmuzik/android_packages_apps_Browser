@@ -44,13 +44,15 @@ public class DefaultSearchEngine implements SearchEngine {
     }
 
     public static DefaultSearchEngine create(Context context) {
-        SearchManager searchManager =
-                (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
-        ComponentName name = searchManager.getWebSearchActivity();
-        if (name == null) return null;
-        SearchableInfo searchable = searchManager.getSearchableInfo(name);
-        if (searchable == null) return null;
-        return new DefaultSearchEngine(context, searchable);
+        //FIXME
+//        SearchManager searchManager =
+//                (SearchManager) context.getSystemService(Context.SEARCH_SERVICE);
+//        ComponentName name = searchManager.getWebSearchActivity();
+//        if (name == null) return null;
+//        SearchableInfo searchable = searchManager.getSearchableInfo(name);
+//        if (searchable == null) return null;
+//        return new DefaultSearchEngine(context, searchable);
+        return null;
     }
 
     private CharSequence loadLabel(Context context, ComponentName activityName) {
