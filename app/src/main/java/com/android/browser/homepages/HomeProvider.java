@@ -29,6 +29,7 @@ import android.util.Log;
 import android.webkit.WebResourceResponse;
 
 import com.android.browser.BrowserSettings;
+import com.android.browser.R;
 
 import java.io.File;
 import java.io.IOException;
@@ -119,11 +120,10 @@ public class HomeProvider extends ContentProvider {
         } catch (Exception e) {}
         if ("browser:incognito".equals(url)) {
             try {
-                //XXX TODO replace with proper page
-//                Resources res = context.getResources();
-//                InputStream ins = res.openRawResource(
-//                        com.android.internal.R.raw.incognito_mode_start_page);
-                return new WebResourceResponse("text/html", "utf8", new StringBufferInputStream(""));
+                Resources res = context.getResources();
+                InputStream ins = res.openRawResource(
+                        R.raw.incognito_mode_start_page);
+                return new WebResourceResponse("text/html", "utf8", ins);
             } catch (NotFoundException ex) {
                 // This shouldn't happen, but try and gracefully handle it jic
                 Log.w(TAG, "Failed opening raw.incognito_mode_start_page", ex);
